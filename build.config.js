@@ -3,7 +3,7 @@
  */
 module.exports = {
   compile_dir: "bin",
-  build_dir: "build",
+  build_dir: "vendor",
   example_dir: "example",
 
   app_files: {
