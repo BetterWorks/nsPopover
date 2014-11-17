@@ -20,7 +20,8 @@
       timeout: 1.5,
       hideOnClick: 'true',
       mouseRelative: '',
-      popupDelay: 0
+      popupDelay: 0,
+      displayModifier: ''
     };
 
     this.setDefaults = function (newDefaults) {
@@ -37,7 +38,7 @@
       }];
   });
 
-  module.directive('nsPopover', ['nsPopover', '$rootScope', '$timeout', '$templateCache', '$q', '$http', '$compile', '$document', function(nsPopover, $rootScope, $timeout, $templateCache, $q, $http, $compile, $document) {
+  module.directive('nsPopover', ['nsPopover', '$rootScope', '$timeout', '$templateCache', '$q', '$http', '$compile', '$document', '$parse', function(nsPopover, $rootScope, $timeout, $templateCache, $q, $http, $compile, $document, $parse) {
     return {
       restrict: 'A',
       scope: true,
@@ -55,7 +56,8 @@
           timeout: attrs.nsPopoverTimeout || defaults.timeout,
           hideOnClick: toBoolean(attrs.nsPopoverHideOnClick || defaults.hideOnClick),
           mouseRelative: attrs.nsPopoverMouseRelative,
-          popupDelay: attrs.nsPopoverPopupDelay || defaults.popupDelay
+          popupDelay: attrs.nsPopoverPopupDelay || defaults.popupDelay,
+          displayModifier: attrs.nsPopoverDisplayModifier || defaults.displayModifier
         };
 
         if (options.mouseRelative) {
@@ -74,6 +76,28 @@
             }
 
             displayer_.id_ = $timeout(function() {
+
+              var alignment = align_;
+              var placement = placement_;
+
+              if (options.displayModifier) {
+                // As hacky as this is, it appears to be much less cumbersome
+                // and intrusive than requiring the user to provide a controller
+                var newPlacement = $parse(options.displayModifier)(scope, {$popover: $popover});
+
+                if (newPlacement) {
+                  if (newPlacement.hide) {
+                    return;
+                  }
+                  if (newPlacement.alignment) {
+                    alignment = newPlacement.alignment;
+                  }
+                  if (newPlacement.placement) {
+                    placement = newPlacement.placement;
+                  }
+                }
+              }
+
               $popover.css('display', 'block');
 
               // position the popover accordingly to the defined placement around the
@@ -86,7 +110,7 @@
                 elmRect = adjustRect(elmRect, options.mouseRelativeX, options.mouseRelativeY, e);
               }
 
-              move($popover, placement_, align_, elmRect, $triangle);
+              move($popover, placement, alignment, elmRect, $triangle);
 
               if (options.hideOnClick) {
                 // Hide the popover without delay on click events.
@@ -173,7 +197,7 @@
           // which allows the customization of the popover based on its position.
           $popover
             .addClass('ns-popover-' + placement_ + '-placement')
-            .addClass('ns-popover-' + align_ + '-align');
+            .addClass('ns-popover-' + align_     + '-align');
 
           $timeout(function() {
             $compile($popover)(scope);
