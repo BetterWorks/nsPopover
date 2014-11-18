@@ -20,7 +20,8 @@
       timeout: 1.5,
       hideOnClick: 'true',
       mouseRelative: '',
-      popupDelay: 0
+      popupDelay: 0,
+      margin: 0
     };
 
     this.setDefaults = function (newDefaults) {
@@ -55,7 +56,8 @@
           timeout: attrs.nsPopoverTimeout || defaults.timeout,
           hideOnClick: toBoolean(attrs.nsPopoverHideOnClick || defaults.hideOnClick),
           mouseRelative: attrs.nsPopoverMouseRelative,
-          popupDelay: attrs.nsPopoverPopupDelay || defaults.popupDelay
+          popupDelay: attrs.nsPopoverPopupDelay || defaults.popupDelay,
+          margin: parseInt(attrs.nsPopoverMargin || defaults.margin),
         };
 
         if (options.mouseRelative) {
@@ -86,7 +88,7 @@
                 elmRect = adjustRect(elmRect, options.mouseRelativeX, options.mouseRelativeY, e);
               }
 
-              move($popover, placement_, align_, elmRect, $triangle);
+              move($popover, placement_, align_, elmRect, $triangle, options.margin);
 
               if (options.hideOnClick) {
                 // Hide the popover without delay on click events.
@@ -251,8 +253,9 @@
          * @param align {String} The way the popover should be aligned - center | left | right.
          * @param rect {ClientRect} The ClientRect of the object to move the popover around.
          * @param triangle {Object} The element that contains the popover's triangle. This can be null.
+	 * @param margin {Number} The amount to offset the popover by.
          */
-        function move(popover, placement, align, rect, triangle) {
+        function move(popover, placement, align, rect, triangle, margin) {
           var popoverRect = getBoundingClientRect(popover[0]);
           var top, left;
 
@@ -274,18 +277,22 @@
             return rect.top;
           };
 
+          if (!margin) {
+            margin = 0;
+          }
+
           if (placement === 'top') {
-            top = rect.top - popoverRect.height;
+            top = rect.top - (popoverRect.height + margin);
             left = positionX();
           } else if (placement === 'right') {
             top = positionY();
-            left = rect.right;
+            left = rect.right + margin;
           } else if (placement === 'bottom') {
-            top = rect.bottom;
+            top = rect.bottom + margin;
             left = positionX();
           } else if (placement === 'left') {
             top = positionY();
-            left = rect.left - popoverRect.width;
+            left = rect.left - (popoverRect.width + margin);
           }
 
           popover

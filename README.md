@@ -135,6 +135,10 @@ Locks the position relative to the mouse. The following are possible values:
  * y - Constraints the y axis to follow the mouse.
  * xy - Constraints both the x and y axis to follow the mouse.
 
+### ``ns-popover-margin {Number}``
+
+Offsets the popover in the direction of the popover by the number of pixels specified.
+
 ### Programmatic Hiding of the Popover
 
 Register the ``hidePopover()`` function against a ``ng-click`` directive to hide the popover when a specific element is clicked (e.g. a close button):
