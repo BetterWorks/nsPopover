@@ -1,17 +1,17 @@
-$popover-z-index: 100 !default;
-$popover-bg-color: #fff !default;
-$popover-border-color: #d2d2d2 !default;
+@popover-z-index: 100;
+@popover-bg-color: #fff;
+@popover-border-color: #d2d2d2;
 
-$popover-triangle-size: 11px !default;
-$popover-triangle-color: $popover-bg-color !default;
-$popover-triangle-border-color: $popover-border-color !default;
+@popover-triangle-size: 11px;
+@popover-triangle-color: @popover-bg-color;
+@popover-triangle-border-color: @popover-border-color;
 
 .ns-popover-list-theme {
   box-sizing: border-box;
-  border: solid 1px $popover-border-color;
+  border: solid 1px @popover-border-color;
   border-radius: 3px;
-  z-index: $popover-z-index;
-  background-color: $popover-bg-color;
+  z-index: @popover-z-index;
+  background-color: @popover-bg-color;
   -webkit-box-shadow: 0 0.3125rem 0.625rem rgba(0,0,0,0.2);
      -moz-box-shadow: 0 0.3125rem 0.625rem rgba(0,0,0,0.2);
           box-shadow: 0 0.3125rem 0.625rem rgba(0,0,0,0.2);
@@ -39,18 +39,18 @@ $popover-triangle-border-color: $popover-border-color !default;
 // @mixins
 //
 // We use this to create equilateral triangles
-// $triangle-size - Used to set border-size. No default, set a px or em size.
-// $triangle-color - Used to set border-color which makes up triangle. No default
-// $triangle-direction - Used to determine which direction triangle points. Options: top, bottom, left, right
-@mixin triangle($triangle-direction,
-  $triangle-size:$popover-triangle-size,
-  $triangle-color:$popover-triangle-color,
-  $triangle-border-color:$popover-triangle-border-color) {
+// @triangle-size - Used to set border-size. No default, set a px or em size.
+// @triangle-color - Used to set border-color which makes up triangle. No default
+// @triangle-direction - Used to determine which direction triangle points. Options: top, bottom, left, right
+.triangle(@triangle-direction,
+  @triangle-size:@popover-triangle-size,
+  @triangle-color:@popover-triangle-color,
+  @triangle-border-color:@popover-triangle-border-color) {
   content: "";
   display: block;
   width: 0;
   height: 0;
-  border: solid $triangle-size;
+  border: solid @triangle-size;
   border-color: transparent;
   position: absolute;
 
@@ -59,85 +59,85 @@ $popover-triangle-border-color: $popover-border-color !default;
     display: block;
     width:0;
     height:0;
-    border: solid ($triangle-size - 1px);
+    border: solid (@triangle-size - 1px);
     border-color: transparent;
     position: absolute;
   }
 
-  @if ($triangle-direction == top) {
-    border-top-color: $triangle-border-color;
+  & when (@triangle-direction = "top") {
+    border-top-color: @triangle-border-color;
     left:50%;
-    bottom: -$triangle-size;
-    margin-left: -$triangle-size;
+    bottom: -@triangle-size;
+    margin-left: -@triangle-size;
 
     &:after {
-      border-top-color: $triangle-color;
+      border-top-color: @triangle-color;
       border-bottom-width: 0;
       bottom: 1px;
-      margin-left: -($triangle-size - 1px);
+      margin-left: -(@triangle-size - 1px);
     }
   }
 
-  @if ($triangle-direction == bottom) {
-    border-bottom-color: $triangle-border-color;
+  & when (@triangle-direction = "bottom") {
+    border-bottom-color: @triangle-border-color;
     left:50%;
-    top: -$triangle-size;
-    margin-left: -$triangle-size;
+    top: -@triangle-size;
+    margin-left: -@triangle-size;
 
     &:after {
-      border-bottom-color: $triangle-color;
+      border-bottom-color: @triangle-color;
       border-top-width: 0;
       top: 1px;
-      margin-left: -($triangle-size - 1px);
+      margin-left: -(@triangle-size - 1px);
     }
   }
 
-  @if ($triangle-direction == left) {
-    border-left-color: $triangle-border-color;
+  & when (@triangle-direction = "left") {
+    border-left-color: @triangle-border-color;
     top:50%;
-    right: -$triangle-size;
-    margin-top: -$triangle-size;
+    right: -@triangle-size;
+    margin-top: -@triangle-size;
 
     &:after {
-      border-left-color: $triangle-color;
+      border-left-color: @triangle-color;
       border-right-width: 0;
       right: 1px;
-      bottom: -($triangle-size - 1px);
+      bottom: -(@triangle-size - 1px);
     }
   }
 
-  @if ($triangle-direction == right) {
-    border-right-color: $triangle-border-color;
+  & when (@triangle-direction = "right") {
+    border-right-color: @triangle-border-color;
     top:50%;
-    left: -$triangle-size;
-    margin-top: -$triangle-size;
+    left: -@triangle-size;
+    margin-top: -@triangle-size;
 
     &:after {
-      border-right-color: $triangle-color;
+      border-right-color: @triangle-color;
       border-left-width: 0;
       left: 1px;
-      bottom: -($triangle-size - 1px);
+      bottom: -(@triangle-size - 1px);
     }
   }
 }
 
 .ns-popover-tooltip-theme {
   box-sizing: border-box;
-  z-index: $popover-z-index;
+  z-index: @popover-z-index;
   background-color: transparent;
 
   .ns-popover-tooltip {
     box-sizing: border-box;
-    border: solid 1px $popover-border-color;
+    border: solid 1px @popover-border-color;
     border-radius: 3px;
-    background-color: $popover-bg-color;
+    background-color: @popover-bg-color;
     padding: 0.5625rem 0.875rem;
     max-width: 20rem;
     font-size: 0.875rem;
     -webkit-box-shadow: 0 0.3125rem 0.625rem rgba(0,0,0,0.2);
        -moz-box-shadow: 0 0.3125rem 0.625rem rgba(0,0,0,0.2);
             box-shadow: 0 0.3125rem 0.625rem rgba(0,0,0,0.2);
-    margin: $popover-triangle-size - 1px;
+    margin: @popover-triangle-size - 1px;
 
     ul {
       padding: 0;
@@ -161,25 +161,25 @@ $popover-triangle-border-color: $popover-border-color !default;
 
   &.ns-popover-bottom-placement {
     .triangle {
-      @include triangle("bottom");
+      .triangle("bottom");
     }
   }
 
   &.ns-popover-top-placement {
     .triangle {
-      @include triangle("top");
+      .triangle("top");
     }
   }
 
   &.ns-popover-right-placement {
     .triangle {
-      @include triangle("right");
+      .triangle("right");
     }
   }
 
   &.ns-popover-left-placement {
     .triangle {
-      @include triangle("left");
+      .triangle("left");
     }
   }
 
