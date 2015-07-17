@@ -62,6 +62,19 @@ angular
 
 ``nsPopover`` defines a simple set of attributes that can be used to customize the popover behavior.
 
+### `ns-popover {Boolean}`
+
+The popover will show by default but ff you set `ns-popover` attribute equal to
+a scope variable whose value is false, the popover will not be displayed. IE:
+
+```
+// In controller:
+$scope.displayPopover = false;
+
+// In HTML:
+<div ns-popover="displayPopover"></div>
+```
+
 ### ``ns-popover-template {String}``
 
 The id of the template that contains the popover content. The content will be loaded through the
@@ -69,7 +82,7 @@ angular ``$http`` service and cached (content will not be loaded if it is alread
 can be loaded through ``path`` to external html template or ``<script>`` tag with ``text\ng-template``.
 
 ```javascript
-<script type="text\ng-template" id="templateId">
+<script type="text/ng-template" id="templateId">
   <h1>Template heading</h1>
   <p>Some content</p>
 </script>
@@ -89,39 +102,29 @@ DOM element can trigger, default: ``click``.
 ### ``ns-popover-timeout {Number}``
 
 The ``ns-popover-timeout`` specify the time to wait before closing the popover and after the mouseout event is
-triggered by the popover.
+triggered by the popover, default 1.5 seconds, use -1 to disable to timeout.
 
 ### ``ns-popover-placement {String}``
 
 Specifies how to position the popover relative to the triggering element. The placement attribute has the given
-syntax: [position] [alignment]. The [position] parameter specifies the position - top, left, right, position - of
-the popover, and the alignment defines the alignment of the popover - center, left, right. The list above shows
+syntax: [position]|[alignment]. The [position] parameter specifies the position (top/right/bottom/left) of
+the popover, and the alignment defines the alignment of the popover (left/center/right). The list below shows
 the possible combinations of [position] and [alignment].
 
- * top|center - The popover will be positioned above the triggering element and its horizontal center will be aligned
-                with the horizontal center of the triggering element.
- * top|left - The popover will be positioned above the triggering element and its left side will be aligned with
-               the left side of the triggering element.
- * top|right - The popover will be positioned above the triggering element and its right side will be aligned with
-               the right side of the triggering element.
- * bottom|center - The popover will be positioned on the below the triggering element and its horizontal center
-                   will be aligned with the horizontal center of the triggering element.
- * bottom|left - The popover will be positioned below the triggering element and its left side will be aligned with
-                 the left side of the triggering element.
- * bottom|right - The popover will be positioned below the triggering element and its right side will be aligned with
-                 the right side of the triggering element.
- * left|center - The popover will be positioned on the left side of the triggering element and its vertical
-                 center will be aligned with vertical center of the triggering element.
- * left|top - The popover will be positioned on the left side of the triggering element and its top will be aligned
-              with the top of the triggering element.
- * left|bottom - The popover will be positioned on the left side of the triggering element and its bottom will be
-                 aligned with the bottom of the triggering element.
- * right|center - The popover will be positioned on the right side of the triggering element and its vertical
-                 center will be aligned with vertical center of the triggering element.
- * right|top - The popover will be positioned on the right side of the triggering element and its top will be aligned
-              with the top of the triggering element.
- * right|bottom - The popover will be positioned on the right side of the triggering element and its bottom will be
-                 aligned with the bottom of the triggering element.
+Position | Alignment | Description
+-------- |---------- | -----------
+top | center | The popover will be positioned above the triggering element and its horizontal center will be aligned with the horizontal center of the triggering element.
+top | left | The popover will be positioned above the triggering element and its left side will be aligned with the left side of the triggering element.
+top | right | The popover will be positioned above the triggering element and its right side will be aligned with the right side of the triggering element.
+bottom | center | The popover will be positioned on the below the triggering element and its horizontal center will be aligned with the horizontal center of the triggering element.
+bottom | left | The popover will be positioned below the triggering element and its left side will be aligned with the left side of the triggering element.
+bottom | right | The popover will be positioned below the triggering element and its right side will be aligned with the right side of the triggering element.
+left | center | The popover will be positioned on the left side of the triggering element and its vertical center will be aligned with vertical center of the triggering element.
+left | top | The popover will be positioned on the left side of the triggering element and its top will be aligned with the top of the triggering element.
+left | bottom | The popover will be positioned on the left side of the triggering element and its bottom will be aligned with the bottom of the triggering element.
+right | center | The popover will be positioned on the right side of the triggering element and its vertical center will be aligned with vertical center of the triggering element.
+right | top | The popover will be positioned on the right side of the triggering element and its top will be aligned with the top of the triggering element.
+right | bottom | The popover will be positioned on the right side of the triggering element and its bottom will be aligned with the bottom of the triggering element.
 
 ### ``ns-popover-hide-on-click {Boolean}``
 
@@ -138,6 +141,11 @@ Locks the position relative to the mouse. The following are possible values:
 ### ``ns-popover-margin {Number}``
 
 Offsets the popover in the direction of the popover by the number of pixels specified.
+
+### ``ns-popover-group {String}``
+
+The ``ns-popover-group`` specifies the group of popovers which should be closed when this instance is shown. This allows
+the construction of popovers that acts like a modal dialog.
 
 ### Programmatic Hiding of the Popover
 

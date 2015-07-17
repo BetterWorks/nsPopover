@@ -99,12 +99,41 @@
             ns-popover-template="close"
             ns-popover-trigger="click"
             ns-popover-theme="ns-popover-tooltip-theme"
-            ns-popover-hide-on-click="false"
-            ns-popover-timeout="1">
+            ns-popover-timeout="1000"
+            ns-popover-hide-on-inside-click="false"
+            ns-popover-hide-on-outside-click="true"
+            ns-popover-hide-on-button-click="true">
         Click Me
     </button>
   </article>
-
+    
+  <h1> Modal </h1>
+  <article>
+      <p>
+          <b>nsPopover</b> hide other popover instances when the current one is open. Can be optionally grouped.
+      </p>
+    <a ns-popover
+       ns-popover-template="tooltip"
+       ns-popover-trigger="mouseenter"
+       ns-popover-theme="ns-popover-tooltip-theme">
+       Hover me
+    </a>
+    <a ns-popover
+       ns-popover-template="tooltip"
+       ns-popover-trigger="mouseenter"
+       ns-popover-theme="ns-popover-tooltip-theme"
+       ns-popover-group="my-group-name">
+      Hover me (Group)
+    </a>
+    <a ns-popover
+       ns-popover-template="tooltip"
+       ns-popover-trigger="mouseenter"
+       ns-popover-theme="ns-popover-tooltip-theme"
+       ns-popover-group="my-group-name">
+      Hover me (Group)
+    </a>
+  </article>
+    
   <h1> Track mouse position </h1>
   <article>
       <p>
@@ -153,6 +182,26 @@
           Click and wait
       </div>
   </article>
+
+  <br>
+
+  <h1>Disable/Enable Popover</h1>
+  <article ng-init="displayPopover = true">
+    <a ns-popover="shouldDisplayPopover()"
+       ns-popover-placement="top"
+       ns-popover-template="menu"
+       ns-popover-trigger="mouseenter"
+       ns-popover-theme="ns-popover-list-theme"
+       ns-popover-timeout="0">
+      Hover me
+    </a>
+
+    <button ng-click="displayPopover = !displayPopover"
+            ng-bind="displayPopover ? 'Turn off popover' : 'Turn on popover'">
+    </button>
+  </article>
+
+  <br>
 </section>
 </body>
 </html>
